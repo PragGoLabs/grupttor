@@ -7,7 +7,7 @@ Grupttor was released in initial phase and you can the [Roadmap](roadmap) for ne
 
 [![GoDoc](https://godoc.org/github.com/praggolabs/grupttor?status.svg)](https://godoc.org/github.com/praggolabs/grupttor)
 [![GoReport](https://goreportcard.com/badge/praggolabs/grupttor)](https://goreportcard.com/report/praggolabs/grupttor)
-[![GoReport](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/praggolabs/grupttor/releases/latest)
+[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/praggolabs/grupttor/releases/latest)
 
 
 # Table of Contents
