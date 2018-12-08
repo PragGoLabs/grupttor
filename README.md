@@ -110,7 +110,7 @@ Now is there only WrapHandler(), which will wrap the two handler function - for 
 simple interface, when you need simple handler. 
 
 I'll do a lot of handlers in future, for http, rabbitmq, etc. 
-For details look at there: [Handlers](https://github.com/praggolabs/grupttor/handlers/)
+For details look at there: [Handlers](https://github.com/praggolabs/grupttor/tree/master/handlers/)
 
 # Example
 ```go
