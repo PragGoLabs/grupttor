@@ -23,7 +23,7 @@ func TestNewSystemInterruptHook(t *testing.T) {
 			func(interrupter *grupttor.Grupttor) error {
 				// pass false to chan
 				testStatusChan <- true
-				
+
 				return nil
 			},
 		),
