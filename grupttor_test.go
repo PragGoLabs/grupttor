@@ -5,9 +5,9 @@ import (
 	"time"
 )
 
-type PlaceboHook struct {}
-func (ph PlaceboHook) Init(grupttor *Grupttor) {}
+type PlaceboHook struct{}
 
+func (ph PlaceboHook) Init(grupttor *Grupttor) {}
 
 func TestGrupttor_GetState_INIT(t *testing.T) {
 	interuptter := NewGrupttor(

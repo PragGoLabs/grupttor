@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Grupttor ecosystem struct
 type Grupttor struct {
 	interrupterState InterruptorState
 	interruptChannel chan os.Signal
@@ -16,6 +17,7 @@ type Grupttor struct {
 	interruptHooks []Hook
 }
 
+// NewGrupttor initialize grupttor with all needed handlers passed and with hooks
 func NewGrupttor(interruptHandler Handler, stopHandler Handler, hooks []Hook) *Grupttor {
 	interrupter := &Grupttor{
 		interrupterState: INIT,
@@ -31,10 +33,13 @@ func NewGrupttor(interruptHandler Handler, stopHandler Handler, hooks []Hook) *G
 	return interrupter
 }
 
+// IsInit check if internal state is INIT
 func (i *Grupttor) IsInit() bool {
 	return i.interrupterState == INIT
 }
 
+// AddHook insert hook to list of existing hooks
+// if internal state is not in INIT it will return error
 func (i *Grupttor) AddHook(hook Hook) error {
 	if !i.IsInit() {
 		return CreateInterruptorWrongStateError("interruptor already waiting for signals, add hooks is not allowed")
@@ -44,10 +49,14 @@ func (i *Grupttor) AddHook(hook Hook) error {
 	return nil
 }
 
+// GetState return internal state
 func (i *Grupttor) GetState() InterruptorState {
 	return i.interrupterState
 }
 
+// StartAndWait change state of interrupt
+// and wait for message on interruptChannel
+// its main function of grupttor
 func (i *Grupttor) StartAndWait() {
 	i.changeState(WAITING)
 
@@ -78,10 +87,13 @@ func (i *Grupttor) StartAndWait() {
 	i.stopHandler(i)
 }
 
+// IsWaiting check if internal state is WAITING
 func (i *Grupttor) IsWaiting() bool {
 	return i.interrupterState == WAITING
 }
 
+// Interrupt will pass interrupt to interrupt channel
+// if interruptor is not in waiting state it will cause error
 func (i *Grupttor) Interrupt() error {
 	if !i.IsWaiting() {
 		return CreateInterruptorWrongStateError("Interruptor is not in waiting state, unable to interrupt, skipping")
@@ -91,10 +103,13 @@ func (i *Grupttor) Interrupt() error {
 	return nil
 }
 
+// IsInterrupting check if internal state is INTERRUPTING
 func (i *Grupttor) IsInterrupting() bool {
 	return i.interrupterState == INTERRUPTING
 }
 
+// Stop handle sending stop signal to stop channel and cause the end of application
+// it expects interruptor is in interrupting state otherwise it cause an error
 func (i *Grupttor) Stop() error {
 	if !i.IsInterrupting() {
 		return CreateInterruptorWrongStateError("Interruptor is not in interrupting state, unable to stop, skipping")
@@ -104,6 +119,7 @@ func (i *Grupttor) Stop() error {
 	return nil
 }
 
+// IsStopped check if internal state is STOPPED
 func (i *Grupttor) IsStopped() bool {
 	return i.interrupterState == STOPPED
 }

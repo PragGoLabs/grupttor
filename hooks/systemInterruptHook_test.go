@@ -51,7 +51,7 @@ func TestNewSystemInterruptHook(t *testing.T) {
 	}()
 
 	// wait until everything run
-	testStatus := <- testStatusChan
+	testStatus := <-testStatusChan
 	if !testStatus {
 		t.Fatalf("Interruptor is still running with state %s", interruptor.GetState())
 	}
