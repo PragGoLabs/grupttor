@@ -4,6 +4,7 @@ application parts when you need to wait for finish and then stop the whole appli
 to do.
 
 Grupttor was released in initial phase and you can the [Roadmap](roadmap) for next steps and features
+
 [![GoDoc](https://godoc.org/github.com/praggolabs/grupttor?status.svg)](https://godoc.org/github.com/praggolabs/grupttor)
 [![GoReport](https://goreportcard.com/badge/praggolabs/grupttor)](https://goreportcard.com/report/praggolabs/grupttor)
 [![GoReport](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/praggolabs/grupttor/releases/latest)
