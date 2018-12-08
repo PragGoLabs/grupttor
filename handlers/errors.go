@@ -23,3 +23,17 @@ func CreateUnableToShutdownHTTPServer(message string) UnableToShutdownHTTPServer
 		},
 	}
 }
+
+// UnableToShutdownHTTPServer wrap the http shutdown error
+type UnableToShutdownAmqpChannelError  struct {
+	*DefaultError
+}
+
+// CreateUnableToShutdownAmqpChannelError factory to create amqp channel cancel error
+func CreateUnableToShutdownAmqpChannelError(message string) UnableToShutdownAmqpChannelError  {
+	return UnableToShutdownAmqpChannelError {
+		&DefaultError{
+			Message: message,
+		},
+	}
+}
