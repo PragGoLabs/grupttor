@@ -33,7 +33,22 @@ func NewGrupttor(interruptHandler Handler, stopHandler Handler, hooks []Hook) *G
 	return interrupter
 }
 
+<<<<<<< HEAD
 // IsInit check if internal state is INIT
+=======
+func NewGrupttorWithoutInterruptHandler(stopHandler Handler, hooks []Hook) *Grupttor {
+	return &Grupttor{
+		interrupterState: INIT,
+		interruptChannel: make(chan os.Signal),
+		stopChannel:      make(chan os.Signal),
+
+		stopHandler: stopHandler,
+
+		interruptHooks: hooks,
+	}
+}
+
+>>>>>>> Splitted handler support
 func (i *Grupttor) IsInit() bool {
 	return i.interrupterState == INIT
 }
@@ -73,7 +88,12 @@ func (i *Grupttor) StartAndWait() {
 	go func() {
 		// wait just for the case
 		time.Sleep(1 * time.Second)
+
 		// and then interrupt
+		if i.interruptHandler == nil {
+			panic("There is no interrupt handler defined")
+		}
+
 		i.interruptHandler(i)
 	}()
 
@@ -90,6 +110,17 @@ func (i *Grupttor) StartAndWait() {
 // IsWaiting check if internal state is WAITING
 func (i *Grupttor) IsWaiting() bool {
 	return i.interrupterState == WAITING
+}
+
+// SetupInterruptHandler set interrupt handler to property
+// if handler is already set, it will cause error
+func (i *Grupttor) SetupInterruptHandler(interruptHandler Handler) error {
+	if i.interruptHandler != nil {
+		return CreateHandlerAlreadyDefinedError("Interrupt handler already defined")
+	}
+
+	i.interruptHandler = interruptHandler
+	return nil
 }
 
 // Interrupt will pass interrupt to interrupt channel

@@ -56,6 +56,28 @@ Just run:
         // add hooks
         []grupttor.Hook{},
     )
+    
+    or 
+    
+    // setup grupttor without interrupt handler and specify them in nested function/method/ctx
+    
+    interruptor := grupttor.NewGrupttorWithoutInterruptHandler(
+        func(interrupter *grupttor.Grupttor) {
+            // and stop handler
+        },
+
+        // add hooks
+        []grupttor.Hook{},
+    )
+    
+    func xy(interruptor *grupttor.Grupttor) {
+        interruptor.SetupInterruptHandler(func(interrupter *grupttor.Grupttor) {
+        	// do some logic with nested fields and then
+        	interruptor.Stop()
+        })
+        
+        // some nested logic
+    }
 ```
 
 ## Add hooks
