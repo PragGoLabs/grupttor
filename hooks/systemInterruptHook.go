@@ -27,13 +27,13 @@ func (sih SystemInterruptHook) Init(interrupter *grupttor.Grupttor) {
 	signal.Notify(sigChannel, sih.allowedSignals...)
 
 	select {
-		case <-sigChannel:
-			// send interrupt
-			err := interrupter.Interrupt()
+	case <-sigChannel:
+		// send interrupt
+		err := interrupter.Interrupt()
 
-			// there is something wrong in application state
-			if err != nil {
-				panic(err)
-			}
+		// there is something wrong in application state
+		if err != nil {
+			panic(err)
+		}
 	}
 }
