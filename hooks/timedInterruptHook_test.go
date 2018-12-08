@@ -2,6 +2,7 @@ package hooks
 
 import (
 	"github.com/PragGoLabs/grupttor"
+	"github.com/PragGoLabs/grupttor/handlers"
 	"os"
 	"syscall"
 	"testing"
@@ -13,13 +14,19 @@ func TestNewTimedInterruptHook(t *testing.T) {
 
 	// setup interruptor
 	interruptor := grupttor.NewGrupttor(
-		func(interrupter *grupttor.Grupttor) {
-			_ = interrupter.Stop()
-		},
-		func(interrupter *grupttor.Grupttor) {
-			// pass false to chan
-			testStatusChan <- true
-		},
+		handlers.NewWrapHandler(
+			func(interrupter *grupttor.Grupttor) error {
+				_ = interrupter.Stop()
+
+				return nil
+			},
+			func(interrupter *grupttor.Grupttor) error {
+				// pass false to chan
+				testStatusChan <- true
+
+				return nil
+			},
+		),
 		[]grupttor.Hook{},
 	)
 
