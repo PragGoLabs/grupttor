@@ -11,21 +11,19 @@ type Grupttor struct {
 	interruptChannel chan os.Signal
 	stopChannel      chan os.Signal
 
-	interruptHandler Handler
-	stopHandler      Handler
+	internalHandler Handle
 
 	interruptHooks []Hook
 }
 
 // NewGrupttor initialize grupttor with all needed handlers passed and with hooks
-func NewGrupttor(interruptHandler Handler, stopHandler Handler, hooks []Hook) *Grupttor {
+func NewGrupttor(handler Handle, hooks []Hook) *Grupttor {
 	interrupter := &Grupttor{
 		interrupterState: INIT,
 		interruptChannel: make(chan os.Signal),
 		stopChannel:      make(chan os.Signal),
 
-		interruptHandler: interruptHandler,
-		stopHandler:      stopHandler,
+		internalHandler: handler,
 
 		interruptHooks: hooks,
 	}
@@ -74,7 +72,7 @@ func (i *Grupttor) StartAndWait() {
 		// wait just for the case
 		time.Sleep(1 * time.Second)
 		// and then interrupt
-		i.interruptHandler(i)
+		i.internalHandler.HandleInterrupt(i)
 	}()
 
 	// wait for interrupt signal
@@ -84,7 +82,7 @@ func (i *Grupttor) StartAndWait() {
 	i.changeState(STOPPED)
 
 	// run interrupt func
-	i.stopHandler(i)
+	i.internalHandler.HandleStop(i)
 }
 
 // IsWaiting check if internal state is WAITING
