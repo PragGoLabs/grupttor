@@ -1,7 +1,7 @@
 package grupttor
 
 // Handler is func for specify handler interface
-type Handler func(interrupter *Grupttor)
+type Handler func(interrupter *Grupttor) error
 
 // InterruptorState represents internal state of interruptor
 type InterruptorState string

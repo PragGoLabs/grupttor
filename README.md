@@ -19,6 +19,7 @@ Grupttor was released in initial phase and you can the [Roadmap](roadmap) for ne
   * [Run grupttor](#run-grupttor)
 - [Example](#example)
 - [Hooks](#hooks)
+- [Handlers](#handlers)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -44,15 +45,16 @@ Just run:
 ```go
     // init interruptor
     interruptor := grupttor.NewGrupttor(
-        func(interrupter *grupttor.Grupttor) {
-            // implement interrupt handler
-            interrupter.Stop()
-        },
-
-        func(interrupter *grupttor.Grupttor) {
-            // and stop handler
-        },
-
+    	handlers.NewWrapHandler(
+            func(interrupter *grupttor.Grupttor) {
+                // implement interrupt handler
+                interrupter.Stop()
+            },
+    
+            func(interrupter *grupttor.Grupttor) {
+                // and stop handler
+            },
+        ),
         // add hooks
         []grupttor.Hook{},
     )
@@ -101,6 +103,15 @@ By default there are 2 hooks:
     
 **You can implement your own hooks, just use the Hook interface and pass out.**
 
+# Handlers
+Handlers are used for handling the signals, interrupt, stop.
+
+Now is there only WrapHandler(), which will wrap the two handler function - for keeping 
+simple interface, when you need simple handler. 
+
+I'll do a lot of handlers in future, for http, rabbitmq, etc. 
+For details look at there: [Handlers](https://github.com/praggolabs/grupttor/handlers/)
+
 # Example
 ```go
     package main
@@ -116,17 +127,19 @@ By default there are 2 hooks:
 
     func main() {
         interruptor := grupttor.NewGrupttor(
-            func(interrupter *grupttor.Grupttor) {
-                fmt.Println("Received interrupt signal")
-    
-                time.Sleep(4*time.Second)
-    
-                interrupter.Stop()
-            },
-            func(interrupter *grupttor.Grupttor) {
-                // exit application
-                os.Exit(0)
-            },
+        	handlers.NewWrapHandler(
+                func(interrupter *grupttor.Grupttor) {
+                    fmt.Println("Received interrupt signal")
+        
+                    time.Sleep(4*time.Second)
+        
+                    interrupter.Stop()
+                },
+                func(interrupter *grupttor.Grupttor) {
+                    // exit application
+                    os.Exit(0)
+                },
+            ),
             []grupttor.Hook{},
         )
     

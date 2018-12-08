@@ -9,14 +9,18 @@ type PlaceboHook struct{}
 
 func (ph PlaceboHook) Init(grupttor *Grupttor) {}
 
+type PlaceboHandler struct{}
+
+func (ph PlaceboHandler) HandleInterrupt(grupttor *Grupttor) error {
+	return nil
+}
+func (ph PlaceboHandler) HandleStop(grupttor *Grupttor) error {
+	return nil
+}
+
 func TestGrupttor_GetState_INIT(t *testing.T) {
 	interuptter := NewGrupttor(
-		func(interrupter *Grupttor) {
-
-		},
-		func(interrupter *Grupttor) {
-
-		},
+		PlaceboHandler{},
 		[]Hook{},
 	)
 
@@ -61,10 +65,7 @@ func TestGrupttor_AddHook_Failed(t *testing.T) {
 
 func createMockInterrupter() *Grupttor {
 	return NewGrupttor(
-		func(interrupter *Grupttor) {
-		},
-		func(interrupter *Grupttor) {
-		},
+		PlaceboHandler{},
 		[]Hook{},
 	)
 }
