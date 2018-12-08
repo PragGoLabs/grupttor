@@ -23,3 +23,15 @@ func CreateInterruptorWrongStateError(message string) InterruptorWrongStateError
 		},
 	}
 }
+
+type HandlerAlreadyDefinedError struct {
+	*DefaultError
+}
+
+func CreateHandlerAlreadyDefinedError(message string) HandlerAlreadyDefinedError {
+	return HandlerAlreadyDefinedError{
+		&DefaultError{
+			Message: message,
+		},
+	}
+}
