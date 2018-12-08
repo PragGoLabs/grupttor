@@ -112,6 +112,8 @@ func (i *Grupttor) IsWaiting() bool {
 	return i.interrupterState == WAITING
 }
 
+// SetupInterruptHandler set interrupt handler to property
+// if handler is already set, it will cause error
 func (i *Grupttor) SetupInterruptHandler(interruptHandler Handler) error {
 	if i.interruptHandler != nil {
 		return CreateHandlerAlreadyDefinedError("Interrupt handler already defined")
