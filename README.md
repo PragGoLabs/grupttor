@@ -39,7 +39,7 @@ exit application or send kill signal whatever you need
 
 # Installing
 Just run:
-    go get -u github.com/PragGoLabs/grupttor
+`go get -u github.com/PragGoLabs/grupttor`
 
 ## Configure grupttor
 ```go
