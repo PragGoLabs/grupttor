@@ -3,7 +3,7 @@ Grupttor is two phase graceful application interruptor(that's why grupttor). It 
 application parts when you need to wait for finish and then stop the whole application, or do whatever else you want 
 to do.
 
-Grupttor was released in initial phase and you can the [Roadmap](roadmap) for next steps and features
+Grupttor was released in initial phase and you can look at the [Roadmap](#roadmap) for next steps and features
 
 [![GoDoc](https://godoc.org/github.com/praggolabs/grupttor?status.svg)](https://godoc.org/github.com/praggolabs/grupttor)
 [![GoReport](https://goreportcard.com/badge/praggolabs/grupttor)](https://goreportcard.com/report/praggolabs/grupttor)
